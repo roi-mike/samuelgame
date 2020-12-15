@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css">
+    <title>GAME SAMUEL</title>
+</head>
+<body style=" overflow:hidden; width: 100%; height:100vh">
+    
+        <div id="menuCV">
+            <a href="./cv/cv_samuel.html" target="_back">VOIR LE CV EN HTML</a>
+            <a href="./cv/cvSAMUEL.pdf" target="_back">TELECHARGER LE CV EN PDF</a>
+            <a href="./cv/cvSAMUEL.jpg" target="_back">TELECHARGER LE CV EN JPG</a>
+        </div>
+        <div id="competences">
+            <img src="./img/win/htmlwin.jpg" alt=" LOGO HTML" >
+            <img src="./img/win/csswin.jpg" alt=" LOGO CSS">
+            <img src="./img/win/javascriptwin.jpg" alt=" LOGO JAVASCRIPT">
+        </div>
+        <canvas id="canvas">
+        </canvas>
+    <script src="./js/Vaisseau.js"></script>
+    <script src="./js/Personnage.js"></script>
+    <script>
+    ////CANVAS/////////////////////////////
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ////AUDIO/////////////////////////////
+    var playGame = new Audio();
+    playGame.src = "./son/avionson.mp3";
+    playGame.volume = 0.1;
+    ////IMAGE/////////////////////////////
+    /*IMAGE FOND DE LA SCENE*/
+    var imgBackgroundScene = new Image();
+    imgBackgroundScene.src = "./img/background.png";
+
+    /* PERSONNAGE img | vie | s_img_width | s_img_height| d_img_width |   d_img_height */
+    var personnage = new Personnage("./img/personnage.png",100,112,120,60,60);
+    var imgPersonnage = new Image();
+    imgPersonnage.src = personnage.getImg();
+
+    var vaisseau = new Vaisseau("./img/ennemi1.png",380,230,200,170);
+    var imgEnnemi1 = new Image();
+    imgEnnemi1.src = vaisseau.getImg();
+    
+    
+    imgEnnemi1.src = vaisseau.getImg();
+    ctx.imageSmoothingEnabled = false;
+
+
+    /* VAISSEAUX ENNEMI 2*/
+    var imgEnnemi2 = new Image();
+    imgEnnemi2.src = "./img/ennemi2.png";
+    var vaisseau2 = new Vaisseau(imgEnnemi2, 535, 255,180,130);
+    
+    
+    var index = 0;
+    var gameplayer;
+    var random = parseInt(Math.random()*canvas.height);
+    var positionHeight = random < vaisseau.dHeight() ? random : random-vaisseau.dHeight();
+    var FPS = 30;
+    var positionLeft;
+
+    ////TAGS WIN/////////////////////////////
+    var tagHTML = document.querySelector('body>div#competences>img:nth-child(1)');
+    var tagCSS = document.querySelector('body>div#competences>img:nth-child(2)');
+    var tagJAVASCRIPT = document.querySelector('body>div#competences>img:nth-child(3)');
+
+    var competences = 0;
+    var scoreplayer = 0;
+
+    // var positionV2DHeight = Math.random() * ((canvas.height - vaisseau2.dHeight()) - vaisseau2.getSpeedVitesse());
+
+    vaisseau2.setdX(900);
+    vaisseau2.setdY(150);
+    
+
+    var scene = setInterval(function(){
+        index++;
+
+        
+        ctx.clearRect(0,0,canvas.with,canvas.height);
+        /*BACKGROUND STORY*/
+        ctx.drawImage(imgBackgroundScene,0,0,1920,1080,
+        -((index * (personnage.getSpeedVitesse() / 4)) % canvas.width) + canvas.width,0,canvas.width,canvas.height);
+        /*BACKGROUND STORY 2*/
+        ctx.drawImage(imgBackgroundScene,0,0,1920,1080,
+        -((index * (personnage.getSpeedVitesse() / 4)) % canvas.width),0,canvas.width,canvas.height);
+
+        /*COMPETENCES OBTENU*/
+        if(gameplayer){
+            scoreplayer++;
+        if(scoreplayer == 500){
+            competences = competences + 1;
+            tagHTML.setAttribute('id','win');
+        }
+        if(scoreplayer == 1500){
+            competences = competences + 1;
+            tagCSS.setAttribute('id','win');
+        }
+        if(scoreplayer == 2500)
+        {
+            competences = competences + 1;
+            tagJAVASCRIPT.setAttribute('id','win'); 
+        }
+
+            positionLeft = -((index * (vaisseau.getSpeedVitesse() / 2)) % (canvas.width + vaisseau.dWidth())) + canvas.width;
+            ctx.drawImage(
+                imgEnnemi1,
+                0,
+                0,
+                vaisseau.sWidth(),
+                vaisseau.sHeight(),
+                positionLeft,
+                positionHeight,
+                vaisseau.dWidth(),
+                vaisseau.dHeight());
+
+                // console.log(" POSITION LEFT",positionLeft);
+                // console.log(" VAISSEAU  ",canvas.width);
+                // console.log("GET SPEED ", personnage.getSpeedVitesse());
+                if(positionLeft >= canvas.width - vaisseau.getSpeedVitesse()){
+                    random = parseInt(Math.random()*canvas.height);
+                    positionHeight = random < vaisseau.dHeight() ? random : random-vaisseau.dHeight();
+                }
+            
+        }
+        /*ENNEMI 2*/
+        
+        if(gameplayer){
+            vaisseau2.setdX(-(index % 30 - vaisseau2.dX()))
+            ctx.drawImage(vaisseau2.getImg(),0,0,vaisseau2.sWidth(),vaisseau2.sHeight(),vaisseau2.dX(),vaisseau2.dY(),vaisseau2.dWidth(),vaisseau2.dHeight());
+            console.log(vaisseau2.dX());
+        }
+
+
+        /*PERSONNAGE GUIDER*/
+        if(gameplayer){
+        ctx.drawImage(/*IMAGE*/imgPersonnage,/*SOURCE*/38,220,personnage.getS_img_size_width(),personnage.getS_img_size_height(),/*DESTINATION*/20,personnage.getGravitySpeed(),personnage.getD_img_size_width(),personnage.getD_img_size_height());
+
+        personnage.setFlight(personnage.getFlight() + personnage.getGravity());
+
+        personnage.setGravitySpeed(Math.min(personnage.getGravitySpeed() + personnage.getFlight() , canvas.height - personnage.getD_img_size_height()));
+
+        if(personnage.getGravitySpeed()  < 0){
+            personnage.setGravitySpeed(-personnage.getGravitySpeed());
+        } 
+
+        /*TEXT INFROMATION NIVEAU*/
+        ctx.fillText("Score Player : "+scoreplayer, canvas.width / 2,40);
+        ctx.fillText("Compétences obtenues : ", canvas.width/8, 40);
+        ctx.font = "bold 15px courier";
+        
+        /*MOTEUR SON*/
+        clonePlayGame = playGame.cloneNode(true);
+        clonePlayGame.play();
+
+        }else{
+            ctx.drawImage(/*IMAGE*/imgPersonnage,/*SOURCE*/38,220,personnage.getS_img_size_width(),personnage.getS_img_size_height(),/*DESTINATION*/20,personnage.getGravitySpeed(),personnage.getD_img_size_width(),personnage.getD_img_size_height());
+
+            personnage.setGravitySpeed((canvas.height / 2) - (personnage.getD_img_size_height   () / 2));
+
+            ctx.fillText("Cliquez pour aider Samuel a gagner des competences", canvas.width / 3.7, 200);
+            ctx.fillText(`" HTML - CSS - JAVASCRIP "`, canvas.width / 2.5, 240);
+            ctx.font = "bold 20px courier"
+        }
+        },1000/FPS);
+
+            /*AU CLIQUE */
+    document.addEventListener("keydown", function(event) {
+        //console.log(event.which);
+        switch(event.which){
+            case 38:
+                /*PLAY GAME*/
+                gameplayer = true;
+                personnage.setFlight(personnage.getJump());
+                //console.log(personnage.getFlight());
+                break;
+            case 81:
+                /*STOP GAME*/
+            gameplayer = false;
+            competences = 0;
+            index = 0;
+            scoreplayer = 0;
+            tagHTML.removeAttribute('id');
+            tagCSS.removeAttribute('id');
+            tagJAVASCRIPT.removeAttribute('id');
+            break;
+            case 80:
+                /*START GAME*/
+            break;
+        }
+    });
+
+    </script>
+</body>
+</html>

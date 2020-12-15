@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    h2{
+        color: rgb(255, 72, 0);
+        text-transform: uppercase;
+        margin-bottom: 30px;
+    }
+    h3{
+        color:rgb(230, 92, 37) ;
+    }
+    body{
+        background: linear-gradient(90deg, #8500ff,#5acaff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    body #contenu{
+        margin-top: 5%;
+        margin-bottom: 5%;
+        width: 90%;
+        border-radius: 5px;
+        background-color: white;
+        height: 100%;
+        z-index: 1;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, .7);
+    }
+    body #contenu header{
+        overflow: hidden;
+        width: 100%;
+    }
+    body #contenu header #photo_id{
+        position: relative;
+        width: 100%;
+        top: -10%;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    body #contenu header #photo_id #photosamuel{
+        z-index: 5;
+        position: absolute;
+        border: 6px solid white;
+        top: 30%;
+        left: 7%;
+        width: 21%;
+        height: 45%;
+        border-radius: 50%;
+    }
+    body #contenu header #photo_id #photodecoration{
+        z-index: 3;
+        position: relative;
+        width: 100%;
+        rotate: 10deg;
+    }
+    body #contenu header #personnage{
+        position: absolute;
+        font-weight: bold;
+        text-align: center;
+        font-size:30px;
+        right: 20%;
+        top: 30%;
+        z-index: 4;
+        width: 30%;
+        height: 20%;
+    }
+    body #contenu header #personnage p:nth-child(1){
+        color: #8500ff;
+    }
+    main{
+        display: flex;
+        justify-content:space-between;
+        width: 100%;
+        height: 100%;
+    }
+    #presentation{
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        width: 50%;
+
+    }
+    #presentation div{
+        margin-left: 13%;
+        text-align: left;
+        width: 85%;
+        margin-top: 7%;
+    }
+    #competence{
+        margin-left: 5%;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        width: 50%;
+    }
+    #competence div{
+        text-align: left;
+        width: 90%;
+        margin-top: 7%;
+    }
+    </style>
+</head>
+<body>
+    <div id="contenu">
+        <!--HEADER-->
+        <header>
+            <div id="photo_id">
+                <img id="photosamuel" src="./imgCV/samuellinkedin.png" alt="photoDeSamuel">
+                <img id="photodecoration" src="./imgCV/fondsamueldessin.png" alt="dessin peinture rose" srcset="">
+            </div>
+            <div id="personnage">
+                <p>Samuel Maboza hondi</p>
+                <p>DÉVELOPPEUR FULL STACK</p>
+            </div>
+        </header>
+        <!--MAIN-->
+        <main>
+            <div id="presentation">
+                <div>
+                    <h2>À PROPOS DE MOI</h2>
+                    Autodidacte depuis plusieurs années dans le domaine du développement,
+                    j'ai choisi de me former au métier afin de monter rapidement en     compétence !<br/> 
+                    Je suis disponible à partir du 11 février 2020. <br/> 
+                    Rencontrons-nous !
+                </div>
+                <div>
+                    <h2>CONTACT</h2>
+                    06 52 01 11 34<br/>
+                    AVENUE GEORGES POMPIDOU<br/>
+                    94370 SUCY EN BRIE dev.mabozahondi@gmail.com<br/> 
+                    https://www.linkedin.com/in/samuel-maboza-hondi <br/>
+                    https://www.whire.me/@mabozasamuel https://github.com/roi-mike
+                </div>
+                <div>
+                    <h2>COMPETENCES</h2>
+                    HTML, CSS, SCSS, BOOTSTRAP,<br/>
+                    JAVASCRIPT, REACT,<br/> 
+                    PHP, SQL, MYSQL, SYMFONY, WEBPACK<br/>
+                    PHOTOSHOP, PREMIER PRO WORLD, EXCEL
+                </div>
+                <div>
+                    <h2>HOBBIS</h2>
+                    Passionné de sport comme le basket pour son coté esprit d’équipe ou le Jiujitsu brésilien pour son coté technique très réfléchi ces sports me permet de m’épanouir en découvrant des nouvelles techniques et d’améliorer la souplesse et mon agilité.
+                </div>
+            </div>
+             <!--COMPETENCES-->
+            <div id="competence">
+                <div id="divFormation">
+                    <h2>FORMATION<h3> 
+                    <h3>IFOCOP FORMATION</h3>
+                    TITRE RNCP CERTIFIE NIVEAU VI LICENCE BAC +3/4 <br>
+                    10/2020 - 06/2021
+                    <br/>
+                    Javascript et DOM, Ajax, Websocket NodeJS, Angular, MongoDB, TypeScript, Express.<br/>
+                    Fabienne Thiery Responsable de formation <br>
+                    Email : fthiry@ifocop.fr
+                    <h3>FORGET FORMATION</h3>
+                    PERMIS D (transport de personnes de plus de 9 personnes assises) <br>
+                    01/2016 - 01/2017<br/>
+                    Conduite dans des conditions atmosphériques difficiles, route de nuit...
+                </div>
+    
+                <div id="divExperience">
+                    <h2>EXPÉRIENCE</h2>
+                    <div>
+                        <h3>LANCRY SECURITE - AGENT INCENDIE</h3>
+                        07/2014 - 01/2020 <br>
+                        Contrôler le bon fonctionnement des systèmes d'alarme incendie et du matériel de secours (extincteur...) ;<br/>
+                        Recenser également les dysfonctionnements du matériel ;<br/>
+                        Mise en pratique de mes connaissances en incendie et en secourisme ;
+                    </div>
+                    <div>
+                        <h3>SYS SECURITE - VEILLEUR DE NUIT</h3>
+                        01/2018 - 01/2020 <br>
+                        Assurer l’accueil et la permanence de la réception de l’hôtel pendant la nuit ;<br/>
+                        Tenir le registre des arrivées et des départs des clients, fournir les clés des chambres et indiquer le numéro de la chambre ;<br/>
+                        Garantir également le calme et la sécurité de l’hôtel pendant la nuit ;
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer style="width:100%; height:4rem ;display: flex; justify-content:center;align-items:centers">
+        </footer>
+    </div>
+    
+</body>
+</html>
