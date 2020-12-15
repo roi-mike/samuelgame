@@ -42,27 +42,34 @@
     var imgPersonnage = new Image();
     imgPersonnage.src = personnage.getImg();
 
+
+    //4 VAISSEAUX ENNEMI///////////////////////////
+
+    
     var vaisseau = new Vaisseau("./img/ennemi1.png",380,230,200,170);
     var imgEnnemi1 = new Image();
-    imgEnnemi1.src = vaisseau.getImg();
-    
+    imgEnnemi1.src = "./img/ennemi1.png";
+    var vaisseau0 = new Vaisseau(imgEnnemi1,380,230,200,170);
+    /* ---- VAISSEAU 1 ENNEMI ---- */
+    var vaisseau1 = new Vaisseau(imgEnnemi1,380,230,200,170);
     
     imgEnnemi1.src = vaisseau.getImg();
     ctx.imageSmoothingEnabled = false;
 
 
-    /* VAISSEAUX ENNEMI 2*/
+    /* VAISSEAUX 2 ENNEMI*/
     var imgEnnemi2 = new Image();
     imgEnnemi2.src = "./img/ennemi2.png";
     var vaisseau2 = new Vaisseau(imgEnnemi2, 535, 255,180,130);
+    /* VAISSEAUX 3 ENNEMI*/
+    var vaisseau3 = new Vaisseau(imgEnnemi2, 535, 255,180,130);
+    /* VAISSEAUX 4 ENNEMI*/
+    var vaisseau4 = new Vaisseau(imgEnnemi2, 535, 255,180,130);
     
     
     var index = 0;
     var gameplayer;
-    var random = parseInt(Math.random()*canvas.height);
-    var positionHeight = random < vaisseau.dHeight() ? random : random-vaisseau.dHeight();
     var FPS = 30;
-    var positionLeft;
 
     ////TAGS WIN/////////////////////////////
     var tagHTML = document.querySelector('body>div#competences>img:nth-child(1)');
@@ -71,18 +78,13 @@
 
     var competences = 0;
     var scoreplayer = 0;
-
-    // var positionV2DHeight = Math.random() * ((canvas.height - vaisseau2.dHeight()) - vaisseau2.getSpeedVitesse());
-
-    vaisseau2.setdX(900);
-    vaisseau2.setdY(150);
-
-    var moVaisseauo = 0;
+    /* INSCREMENTATION VEAUSSEAU EN X */
+    var vaisseaux0 = 0, vaisseaux1 = 0, vaisseaux2 = 0, vaisseaux3 = 0, vaisseaux4 = 0;
 
     var scene = setInterval(function(){
         index++;
 
-        
+        /* ----  BACKGROUND  ---- */
         ctx.clearRect(0,0,canvas.with,canvas.height);
         /*BACKGROUND STORY*/
         ctx.drawImage(imgBackgroundScene,0,0,1920,1080,
@@ -91,60 +93,91 @@
         ctx.drawImage(imgBackgroundScene,0,0,1920,1080,
         -((index * (personnage.getSpeedVitesse() / 4)) % canvas.width),0,canvas.width,canvas.height);
 
-        /*COMPETENCES OBTENU*/
+        /* ----  COMPETENCES OBTENU  ----  */
         if(gameplayer){
             scoreplayer++;
-        if(scoreplayer == 500){
-            competences = competences + 1;
-            tagHTML.setAttribute('id','win');
-        }
-        if(scoreplayer == 1500){
-            competences = competences + 1;
-            tagCSS.setAttribute('id','win');
-        }
-        if(scoreplayer == 2500)
-        {
-            competences = competences + 1;
-            tagJAVASCRIPT.setAttribute('id','win'); 
+            if(scoreplayer == 500){
+                competences = competences + 1;
+                tagHTML.setAttribute('id','win');
+            }
+            if(scoreplayer == 1500){
+                competences = competences + 1;
+                tagCSS.setAttribute('id','win');
+            }
+            if(scoreplayer == 2500)
+            {
+                competences = competences + 1;
+                tagJAVASCRIPT.setAttribute('id','win'); 
+            }   
         }
 
-            positionLeft = -((index * (vaisseau.getSpeedVitesse() / 2)) % (canvas.width + vaisseau.dWidth())) + canvas.width;
-            ctx.drawImage(
-                imgEnnemi1,
-                0,
-                0,
-                vaisseau.sWidth(),
-                vaisseau.sHeight(),
-                positionLeft,
-                positionHeight,
-                vaisseau.dWidth(),
-                vaisseau.dHeight());
-
-                // console.log(" POSITION LEFT",positionLeft);
-                // console.log(" VAISSEAU  ",canvas.width);
-                // console.log("GET SPEED ", personnage.getSpeedVitesse());
-                if(positionLeft >= canvas.width - vaisseau.getSpeedVitesse()){
-                    random = parseInt(Math.random()*canvas.height);
-                    positionHeight = random < vaisseau.dHeight() ? random : random-vaisseau.dHeight();
-                }
-            
-        }
-        /*ENNEMI 2*/
+        /*  ----  VAISSEAU 0 ENNEMI  ----  */
         if(gameplayer){
-            moVaisseauo++
-            vaisseau2.setdX(-((moVaisseauo * vaisseau2.getSpeedVitesse()) - (canvas.width + vaisseau2.dWidth())));
-            //console.log(vaisseau2.dX());
+            vaisseau0.setSpeedVitesse(8.2);
+            vaisseaux0++;
+            vaisseau0.setdX(-((vaisseaux0 * vaisseau0.getSpeedVitesse()) - (canvas.width + vaisseau0.dWidth())));
+
+            if(vaisseau0.dX() <= -vaisseau0.dWidth()){
+                vaisseau0.setdY(Math.random()*(canvas.height - vaisseau0.dHeight()));
+                vaisseaux0 = 0;
+            }
+            ctx.drawImage(vaisseau0.getImg(),0,0,vaisseau0.sWidth(),vaisseau0.sHeight(),vaisseau0.dX(),vaisseau0.dY(),vaisseau0.dWidth(),vaisseau0.dHeight());
+        }
+
+         /*  ----  VAISSEAU 1 ENNEMI  ----  */
+         if(gameplayer){
+            vaisseau1.setSpeedVitesse(4);
+            vaisseaux1++;
+            vaisseau1.setdX(-((vaisseaux1 * vaisseau1.getSpeedVitesse()) - (canvas.width + vaisseau1.dWidth())));
+
+            if(vaisseau1.dX() <= -vaisseau1.dWidth()){
+                vaisseau1.setdY(Math.random()*(canvas.height - vaisseau1.dHeight()));
+                vaisseaux1 = 0;
+            }
+            ctx.drawImage(vaisseau1.getImg(),0,0,vaisseau1.sWidth(),vaisseau1.sHeight(),vaisseau1.dX(),vaisseau1.dY(),vaisseau1.dWidth(),vaisseau1.dHeight());
+        }
+
+        /* ----  VAISSEAU 2 ENNEMI   ----  */
+        if(gameplayer){
+            vaisseaux2++
+            vaisseau2.setdX(-((vaisseaux2 * vaisseau2.getSpeedVitesse()) - (canvas.width + vaisseau2.dWidth())));
 
             if(vaisseau2.dX() <= -vaisseau2.dWidth()){
-                console.log("je suis bas");
-                console.log(vaisseau2.dX());
-                moVaisseauo = 0;
+                vaisseau2.setdY(Math.random()*(canvas.height - vaisseau2.dHeight()));
+                vaisseaux2 = 0;
             }
             ctx.drawImage(vaisseau2.getImg(),0,0,vaisseau2.sWidth(),vaisseau2.sHeight(),vaisseau2.dX(),vaisseau2.dY(),vaisseau2.dWidth(),vaisseau2.dHeight());
         }
 
+        /*  ----  VAISSEAU 3 ENNEMI  ----  */
+        if(gameplayer){
+            vaisseau3.setSpeedVitesse(5);
+            vaisseaux3++
+            vaisseau3.setdX(-((vaisseaux3 * vaisseau3.getSpeedVitesse()) - (canvas.width + vaisseau3.dWidth())));
+            //console.log(vaisseau2.dX());
 
-        /*PERSONNAGE GUIDER*/
+            if(vaisseau3.dX() <= -vaisseau3.dWidth()){
+                vaisseau3.setdY(Math.random()*(canvas.height - vaisseau3.dHeight()));
+                vaisseaux3 = 0;
+            }
+            ctx.drawImage(vaisseau3.getImg(),0,0,vaisseau3.sWidth(),vaisseau3.sHeight(),vaisseau3.dX(),vaisseau3.dY(),vaisseau3.dWidth(),vaisseau3.dHeight());
+        }
+
+        /*  ----  VAISSEAU 4 ENNEMI  ----  */
+        if(gameplayer){
+            vaisseau4.setSpeedVitesse(4.5);
+            vaisseaux4++
+            vaisseau4.setdX(-((vaisseaux4 * vaisseau4.getSpeedVitesse()) - (canvas.width + vaisseau4.dWidth())));
+            //console.log(vaisseau2.dX());
+
+            if(vaisseau4.dX() <= -vaisseau4.dWidth()){
+                vaisseau4.setdY(Math.random()*(canvas.height - vaisseau4.dHeight()));
+                vaisseaux4 = 0;
+            }
+            ctx.drawImage(vaisseau4.getImg(),0,0,vaisseau4.sWidth(),vaisseau4.sHeight(),vaisseau4.dX(),vaisseau4.dY(),vaisseau4.dWidth(),vaisseau4.dHeight());
+        }
+
+        /*  ----  PERSONNAGE  ----  */
         if(gameplayer){
         ctx.drawImage(/*IMAGE*/imgPersonnage,/*SOURCE*/38,220,personnage.getS_img_size_width(),personnage.getS_img_size_height(),/*DESTINATION*/20,personnage.getGravitySpeed(),personnage.getD_img_size_width(),personnage.getD_img_size_height());
 
@@ -155,13 +188,18 @@
         if(personnage.getGravitySpeed()  < 0){
             personnage.setGravitySpeed(-personnage.getGravitySpeed());
         } 
+        /* CONLISSION */
 
-        /*TEXT INFROMATION NIVEAU*/
+        if(personnage.getGravitySpeed()+personnage.getD_img_size_width() <= vaisseau0.dX() ){
+            console.log('COLISION VAISSEAU 0');
+        }
+
+        /*  ---- TEXT INFORMATION NIVEAU  ----  */
         ctx.fillText("Score Player : "+scoreplayer, canvas.width / 2,40);
         ctx.fillText("Compétences obtenues : ", canvas.width/8, 40);
         ctx.font = "bold 15px courier";
         
-        /*MOTEUR SON*/
+        /*  ----  MOTEUR SON  ----  */
         clonePlayGame = playGame.cloneNode(true);
         clonePlayGame.play();
 
@@ -193,6 +231,7 @@
             gameplayer = false;
             competences = 0;
             index = 0;
+            vaisseaux0 = 0, vaisseaux1 = 0, vaisseaux2 = 0, vaisseaux3 = 0, vaisseaux4 = 0;
             scoreplayer = 0;
             tagHTML.removeAttribute('id');
             tagCSS.removeAttribute('id');
