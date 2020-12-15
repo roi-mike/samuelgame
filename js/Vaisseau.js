@@ -9,7 +9,7 @@ class Vaisseau{
         this.deplacementY = 0;
         this.gravitySpeed;
         this.flight = 0;
-        this.speedVitesse = 10;
+        this.speedVitesse = 7;
     }
 
     getImg(){

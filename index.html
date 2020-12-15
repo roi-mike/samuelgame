@@ -131,9 +131,14 @@
         /*ENNEMI 2*/
         
         if(gameplayer){
-            vaisseau2.setdX(-(index % 30 - vaisseau2.dX()))
+            vaisseau2.setdX(-((index * vaisseau2.getSpeedVitesse()) - (canvas.width + vaisseau2.dWidth())));
+
             ctx.drawImage(vaisseau2.getImg(),0,0,vaisseau2.sWidth(),vaisseau2.sHeight(),vaisseau2.dX(),vaisseau2.dY(),vaisseau2.dWidth(),vaisseau2.dHeight());
             console.log(vaisseau2.dX());
+
+            if(vaisseau2.dX() <= canvas.dWidth - vaisseau2.dWidth){
+                vaisseau2.setdX(-((index * vaisseau2.getSpeedVitesse()) - (canvas.width + vaisseau2.dWidth())));
+            }
         }
 
 
