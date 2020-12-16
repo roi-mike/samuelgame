@@ -67,8 +67,8 @@
     var vaisseau4 = new Vaisseau(imgEnnemi2, 535, 255,180,130);
     
     
-    var index = 0;
-    var gameplayer;
+    
+    
     var FPS = 30;
 
     ////TAGS WIN/////////////////////////////
@@ -76,9 +76,11 @@
     var tagCSS = document.querySelector('body>div#competences>img:nth-child(2)');
     var tagJAVASCRIPT = document.querySelector('body>div#competences>img:nth-child(3)');
 
+    /* INCREMENTATION VEAUSSEAU EN X */
+    var index = 0;
+    var gameplayer;
     var competences = 0;
     var scoreplayer = 0;
-    /* INSCREMENTATION VEAUSSEAU EN X */
     var vaisseaux0 = 0, vaisseaux1 = 0, vaisseaux2 = 0, vaisseaux3 = 0, vaisseaux4 = 0;
 
     var scene = setInterval(function(){
@@ -108,7 +110,20 @@
             {
                 competences = competences + 1;
                 tagJAVASCRIPT.setAttribute('id','win'); 
-            }   
+            }
+            if(competences == 3)
+            {
+                setTimeout(function(){
+                    gameplayer = false;
+                    index = 0;
+                    vaisseaux0 = 0, vaisseaux1 = 0, vaisseaux2 = 0, vaisseaux3 = 0, vaisseaux4 = 0;
+                    scoreplayer = 0;
+                    tagHTML.removeAttribute('id');
+                    tagCSS.removeAttribute('id');
+                    tagJAVASCRIPT.removeAttribute('id');
+                },1500)
+                
+            }
         }
 
         /*  ----  VAISSEAU 0 ENNEMI  ----  */
@@ -185,18 +200,34 @@
 
         personnage.setGravitySpeed(Math.min(personnage.getGravitySpeed() + personnage.getFlight() , canvas.height - personnage.getD_img_size_height()));
 
+        /* ---- COLISSION ---- */
+
+        if(personnage.getGravitySpeed() + personnage.getD_img_size_width < (vaisseau0.dX() + vaisseau0.dWidth())){
+            console.log('colision');
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         if(personnage.getGravitySpeed()  < 0){
             personnage.setGravitySpeed(-personnage.getGravitySpeed());
         } 
-        /* CONLISSION */
-
-        if(personnage.getGravitySpeed()+personnage.getD_img_size_width() <= vaisseau0.dX() ){
-            console.log('COLISION VAISSEAU 0');
-        }
 
         /*  ---- TEXT INFORMATION NIVEAU  ----  */
         ctx.fillText("Score Player : "+scoreplayer, canvas.width / 2,40);
-        ctx.fillText("Compétences obtenues : ", canvas.width/8, 40);
+        ctx.fillText(`Compétences obtenues : ${competences}/3 `, canvas.width/8, 40);
         ctx.font = "bold 15px courier";
         
         /*  ----  MOTEUR SON  ----  */
@@ -208,20 +239,41 @@
 
             personnage.setGravitySpeed((canvas.height / 2) - (personnage.getD_img_size_height   () / 2));
 
-            ctx.fillText("Cliquez pour aider Samuel a gagner des competences", canvas.width / 3.7, 200);
-            ctx.fillText(`" HTML - CSS - JAVASCRIP "`, canvas.width / 2.5, 240);
-            ctx.fillText(`"Fleche haut pour commencer le jeu"`, canvas.width / 3, 270);
-            ctx.fillText(`"Touche Q pour quitter"`, canvas.width / 3, 290);
-            ctx.font = "bold 20px courier"
+            if(competences == 3){
+                ctx.fillText("Génial !!! Vous avez les competences", canvas.width / 3.7, 200);
+                ctx.fillText(`" HTML - CSS - JAVASCRIP "`, canvas.width / 2.5, 240);
+                ctx.fillText(`"Fleche haut pour commencer le jeu"`, canvas.width / 3, 270);
+                ctx.fillText(`"Touche Q pour quitter"`, canvas.width / 3, 290);
+                ctx.fillText("Pour rejouer ! ", canvas.width / 3, 310);
+                ctx.font = "bold 20px courier";
+
+            }else{
+                ctx.fillText("Cliquez pour aider Samuel a gagner des competences", canvas.width / 3.7, 200);
+                ctx.fillText(`" HTML - CSS - JAVASCRIP "`, canvas.width / 2.5, 240);
+                ctx.fillText(`"Fleche haut pour commencer le jeu"`, canvas.width / 3, 270);
+                ctx.fillText(`"Touche Q pour quitter"`, canvas.width / 3, 290);
+                ctx.font = "bold 20px courier";
+            }
+            
         }
         },1000/FPS);
-
+        
             /*AU CLIQUE */
     document.addEventListener("keydown", function(event) {
-        //console.log(event.which);
+        console.log(event.which);
         switch(event.which){
             case 38:
                 /*PLAY GAME*/
+                if(competences == 3){
+                    gameplayer = false;
+                    competences = 0;
+                    index = 0;
+                    vaisseaux0 = 0, vaisseaux1 = 0, vaisseaux2 = 0, vaisseaux3 = 0, vaisseaux4 = 0;
+                    scoreplayer = 0;
+                    tagHTML.removeAttribute('id');
+                    tagCSS.removeAttribute('id');
+                    tagJAVASCRIPT.removeAttribute('id');
+                }
                 gameplayer = true;
                 personnage.setFlight(personnage.getJump());
                 //console.log(personnage.getFlight());
@@ -236,9 +288,6 @@
             tagHTML.removeAttribute('id');
             tagCSS.removeAttribute('id');
             tagJAVASCRIPT.removeAttribute('id');
-            break;
-            case 80:
-                /*START GAME*/
             break;
         }
     });
