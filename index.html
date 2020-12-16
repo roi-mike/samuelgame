@@ -200,26 +200,38 @@
 
         personnage.setGravitySpeed(Math.min(personnage.getGravitySpeed() + personnage.getFlight() , canvas.height - personnage.getD_img_size_height()));
 
-        /* ---- COLISSION ---- */
-
-        if(personnage.getGravitySpeed() + personnage.getD_img_size_width < (vaisseau0.dX() + vaisseau0.dWidth())){
-            console.log('colision');
+        /* ---- COLLISSION ---- */
+        if(
+            vaisseau0.dX() <= 20 + personnage.getD_img_size_width() &&
+            vaisseau0.dX() + vaisseau0.dWidth() >= personnage.getGravitySpeed() ||
+            vaisseau1.dX() <= 20 + personnage.getD_img_size_width() &&
+            vaisseau1.dX() + vaisseau1.dWidth() >= personnage.getGravitySpeed() ||
+            vaisseau2.dX() <= 20 +  personnage.getD_img_size_width() &&
+            vaisseau2.dX() + vaisseau2.dWidth() >= personnage.getGravitySpeed() ||
+            vaisseau3.dX() <= 20 +  personnage.getD_img_size_width() &&
+            vaisseau3.dX() + vaisseau3.dWidth() >= personnage.getGravitySpeed() ||
+            vaisseau4.dX() <= 20 +  personnage.getD_img_size_width() &&
+            vaisseau4.dX() + vaisseau4.dWidth() >= personnage.getGravitySpeed()
+        ){
+            gameplayer = false;
+            index = 0;
+            gameplayer;
+            competences = 0;
+            scoreplayer = 0;
+            vaisseaux0 = 0, vaisseaux1 = 0, vaisseaux2 = 0, vaisseaux3 = 0, vaisseaux4 = 0;
         }
 
+        // if(personnage.getGravitySpeed() < vaisseau0.dWidth() - vaisseau0.dX()
+        //   && personnage.getGravitySpeed() > vaisseau0.dHeight() - vaisseau0.dY()
+        // ){
+        //     console.log("colision");
+        // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // if( vaisseau0.dX() <= 20 + personnage.getD_img_size_width() &&
+        //     vaisseau0.dX() + vaisseau0.dWidth() >= personnage.getGravitySpeed() &&
+        //     vaisseau0.dY() <= 20 + personnage.getD_img_size_height() &&
+        //     vaisseau0.dY() + vaisseau0.dHeight() >= personnage.getGravitySpeed()
+        // )
 
         if(personnage.getGravitySpeed()  < 0){
             personnage.setGravitySpeed(-personnage.getGravitySpeed());
@@ -240,8 +252,8 @@
             personnage.setGravitySpeed((canvas.height / 2) - (personnage.getD_img_size_height   () / 2));
 
             if(competences == 3){
-                ctx.fillText("Génial !!! Vous avez les competences", canvas.width / 3.7, 200);
-                ctx.fillText(`" HTML - CSS - JAVASCRIP "`, canvas.width / 2.5, 240);
+                ctx.fillText("Génial !!! Vous avez gagné les competences pour Samuel", canvas.width / 3.4, 200);
+                ctx.fillText(`" HTML - CSS - JAVASCRIPT "`, canvas.width / 2.5, 240);
                 ctx.fillText(`"Fleche haut pour commencer le jeu"`, canvas.width / 3, 270);
                 ctx.fillText(`"Touche Q pour quitter"`, canvas.width / 3, 290);
                 ctx.fillText("Pour rejouer ! ", canvas.width / 3, 310);
