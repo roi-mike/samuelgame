@@ -120,16 +120,10 @@
             }
             if(competences == 3)
             {
-                setTimeout(function(){
                     gameplayer = false;
                     index = 0;
                     vaisseaux0 = 0, vaisseaux1 = 0, vaisseaux2 = 0, vaisseaux3 = 0, vaisseaux4 = 0;
                     scoreplayer = 0;
-                    tagHTML.removeAttribute('id');
-                    tagCSS.removeAttribute('id');
-                    tagJAVASCRIPT.removeAttribute('id');
-                },1500)
-                
             }
         }
 
@@ -263,7 +257,7 @@
             if(competences == 3){
                 ctx.fillText("Génial !!! Vous avez gagné les competences pour Samuel", canvas.width / 3.4, 200);
                 ctx.fillText(`" HTML - CSS - JAVASCRIPT "`, canvas.width / 2.5, 240);
-                ctx.fillText(`"Fleche haut pour commencer le jeu"`, canvas.width / 3, 270);
+                ctx.fillText(`"Fleche droit pour commencer le jeu"`, canvas.width / 3, 270);
                 ctx.fillText(`"Touche Q pour quitter"`, canvas.width / 3, 290);
                 ctx.fillText("Pour rejouer ! ", canvas.width / 3, 310);
                 ctx.font = "bold 20px courier";
