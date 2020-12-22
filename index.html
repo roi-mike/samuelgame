@@ -66,10 +66,17 @@
     /* VAISSEAUX 4 ENNEMI*/
     var vaisseau4 = new Vaisseau(imgEnnemi2, 535, 255,180,130);
     
-    
-    
-    
     var FPS = 30;
+
+
+     /*VERIFICATION DES COMPETENCE*/
+     if(competences == 3){
+        gameplayer = false;
+        competences = 0;
+        index = 0;
+        vaisseaux0 = 0, vaisseaux1 = 0, vaisseaux2 = 0, vaisseaux3 = vaisseaux4 = 0;
+        scoreplayer = 0;
+    }
 
     ////TAGS WIN/////////////////////////////
     var tagHTML = document.querySelector('body>div#competences>img:nth-child(1)');
@@ -200,81 +207,44 @@
 
         personnage.setGravitySpeed(Math.min(personnage.getGravitySpeed() + personnage.getFlight() , canvas.height - personnage.getD_img_size_height()));
 
-function hit(ship) {
-gameplayer = false;
-index = 0;
-gameplayer;
-competences = 0;
-scoreplayer = 0;
-ship = 0;
-}
-/*
-perso.width environ 80
-[ ] | [ ][ ][ ][ ][ ]
-[ ] | [X][O][ ][ ][ ]
-[O] | [ ][ ][ ][ ][ ]
 
-*/
+        if(personnage.getGravitySpeed()  < 0){
+            personnage.setGravitySpeed(-personnage.getGravitySpeed());
+        } 
 
+        /* -- new colision -- */
 
-
-/* -- new colision -- */
-
-
-function planeCollideWith(ship){
-    if(ship.dX() <= 80 && ship.dX() > -80 &&
-        ship.dY() + ship.dHeight() >= personnage.getGravitySpeed() && 
-        ship.dY() <= personnage.getGravitySpeed() + 60) {
-            return true;
-        }
-        return false;
-}
-
-let shipTab = [vaisseau0,vaisseau1,vaisseau2,vaisseau3,vaisseau4];
-
-for (let i = 0; i < shipTab.length; i++) {
-    if (planeCollideWith(shipTab[i]))
-        hit(shipTab[i]);
-}
-
-        /* ---- COLLISSION ---- */
         /*
-        if(
-            vaisseau0.dX() <= 20 + personnage.getD_img_size_width() &&
-            vaisseau0.dX() + vaisseau0.dWidth() >= personnage.getGravitySpeed() ||
-            vaisseau1.dX() <= 20 + personnage.getD_img_size_width() &&
-            vaisseau1.dX() + vaisseau1.dWidth() >= personnage.getGravitySpeed() ||
-            vaisseau2.dX() <= 20 +  personnage.getD_img_size_width() &&
-            vaisseau2.dX() + vaisseau2.dWidth() >= personnage.getGravitySpeed() ||
-            vaisseau3.dX() <= 20 +  personnage.getD_img_size_width() &&
-            vaisseau3.dX() + vaisseau3.dWidth() >= personnage.getGravitySpeed() ||
-            vaisseau4.dX() <= 20 +  personnage.getD_img_size_width() &&
-            vaisseau4.dX() + vaisseau4.dWidth() >= personnage.getGravitySpeed()
-        ){
-            console.log("Hit");
+        perso.width environ 80
+        [ ] | [ ][ ][ ][ ][ ]
+        [ ] | [X][O][ ][ ][ ]
+        [O] | [ ][ ][ ][ ][ ]
+
+        */
+        function hit(ship) {
             gameplayer = false;
             index = 0;
             gameplayer;
             competences = 0;
             scoreplayer = 0;
-            vaisseaux0 = 0, vaisseaux1 = 0, vaisseaux2 = 0, vaisseaux3 = 0, vaisseaux4 = 0;
+            ship = 0;
+            }
+
+        function planeCollideWith(ship){
+            if(ship.dX() <= 80 && ship.dX() > -80 &&
+                ship.dY() + ship.dHeight() >= personnage.getGravitySpeed() && 
+                ship.dY() <= personnage.getGravitySpeed() + 60) {
+                    return true;
+                }
+                return false;
         }
-*/
-        // if(personnage.getGravitySpeed() < vaisseau0.dWidth() - vaisseau0.dX()
-        //   && personnage.getGravitySpeed() > vaisseau0.dHeight() - vaisseau0.dY()
-        // ){
-        //     console.log("colision");
-        // }
 
-        // if( vaisseau0.dX() <= 20 + personnage.getD_img_size_width() &&
-        //     vaisseau0.dX() + vaisseau0.dWidth() >= personnage.getGravitySpeed() &&
-        //     vaisseau0.dY() <= 20 + personnage.getD_img_size_height() &&
-        //     vaisseau0.dY() + vaisseau0.dHeight() >= personnage.getGravitySpeed()
-        // )
+        let shipTab = [vaisseau0,vaisseau1,vaisseau2,vaisseau3,vaisseau4];
 
-        if(personnage.getGravitySpeed()  < 0){
-            personnage.setGravitySpeed(-personnage.getGravitySpeed());
-        } 
+        for (let i = 0; i < shipTab.length; i++) {
+            if (planeCollideWith(shipTab[i]))
+                hit(shipTab[i]);
+        }
 
         /*  ---- TEXT INFORMATION NIVEAU  ----  */
         ctx.fillText("Score Player : "+scoreplayer, canvas.width / 2,40);
@@ -315,20 +285,20 @@ for (let i = 0; i < shipTab.length; i++) {
         switch(event.which){
             case 38:
                 /*PLAY GAME*/
-                if(competences == 3){
-                    gameplayer = false;
-                    competences = 0;
-                    index = 0;
-                    vaisseaux0 = 0, vaisseaux1 = 0, vaisseaux2 = 0, vaisseaux3 = 0, vaisseaux4 = 0;
-                    scoreplayer = 0;
-                    tagHTML.removeAttribute('id');
-                    tagCSS.removeAttribute('id');
-                    tagJAVASCRIPT.removeAttribute('id');
-                }
-                gameplayer = true;
                 personnage.setFlight(personnage.getJump());
-                //console.log(personnage.getFlight());
                 break;
+            case 39:
+                /*REGAME*/
+                competences = 0;
+                index = 0;
+                vaisseaux0 = 0, vaisseaux1 = 0, vaisseaux2 = 0, vaisseaux3 = vaisseaux4 = 0;
+                scoreplayer = 0;
+                tagHTML.removeAttribute('id');
+                tagCSS.removeAttribute('id');
+                tagJAVASCRIPT.removeAttribute('id');
+                gameplayer = true;
+
+            break;
             case 81:
                 /*STOP GAME*/
             gameplayer = false;
